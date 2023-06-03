@@ -1,13 +1,7 @@
 const pg = require('pg');
 const defaultConfig = require('../config/defaultConfig');
-const client = new pg.Client(defaultConfig.DataBsee);
-client.connect(err => {
-    if (err) {
-        console.log(err);
-        throw err;
-    };
-  });
-//注意：正式项目的时候要建立连接池
+const {pool}=defaultConfig;
+
 module.exports = {
 
     register: async(name, pwd) => {
@@ -22,7 +16,9 @@ module.exports = {
 
     getTeachersData:async()=>{
 
+        const client=await pool.connect();//请求连接池连接（连接池已经维持了数据库的连接）
         let database;
+
         let sql=`select * from zjutuser.liuhf_teachers order by lhf_tsalary DESC;`;
         console.log(sql);
         database=await client.query(sql);
