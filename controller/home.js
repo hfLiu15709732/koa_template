@@ -2,8 +2,9 @@ const HomeService = require('../service/home')
 
 module.exports = {
   index: async(ctx, next) => {
-    let data=await HomeService.getTeachersData("age");
-    ctx.response.body = data
+    //let data=await HomeService.getTeachersData("age");
+    console.log(ctx.state.user);
+    ctx.response.body = "success"
   },
 
   home: async(ctx, next) => {

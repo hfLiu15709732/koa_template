@@ -22,7 +22,7 @@ module.exports = {
         let sql=`select * from zjutuser.liuhf_teachers order by lhf_tsalary DESC;`;
         console.log(sql);
         database=await client.query(sql);
-        return {teacherData:database.rows,cnt:database.rowCount}
+        return {resultArr:database.rows,cnt:database.rowCount}
         
 
     }
