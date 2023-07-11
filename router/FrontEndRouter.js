@@ -13,8 +13,10 @@ module.exports = (app) => {
   router.post( `${loginBaseURL}/username`,Login_Controller.loginByUserName)
   router.post( `${loginBaseURL}/email`, Login_Controller.loginByEmail)
 
-  router.get( `/`, HomeController.index)
+  router.post( `/`, HomeController.index)
+  router.post( `/home`, HomeController.home)
   
   app.use(router.routes())
      .use(router.allowedMethods())
 }
+//

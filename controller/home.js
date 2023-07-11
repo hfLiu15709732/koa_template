@@ -1,16 +1,23 @@
-const HomeService = require('../service/home')
+const jwt= require("jsonwebtoken")
+const HomeService = require('../service/home');
+const defaultConfig = require('../config/defaultConfig');
 
 module.exports = {
   index: async(ctx, next) => {
     //let data=await HomeService.getTeachersData("age");
-    console.log(ctx.state.user);
-    ctx.response.body = "success"
+    const userInfo=ctx.request.body
+    const token=jwt.sign({userName:userInfo.userName},defaultConfig.jwt_session_key,{expiresIn:"48h"});
+    console.log(token);
+
+    ctx.response.body={state:"ok",token:token}
   },
 
   home: async(ctx, next) => {
-    console.log(ctx.request.query)
-    console.log(ctx.request.querystring)
-    ctx.response.body = '<h1>HOME page</h1>'
+
+    console.log(ctx.request.header.token);
+    console.log(ctx.request.body);
+    let userName=jwt.verify(ctx.request.header.token,defaultConfig.jwt_session_key)
+    ctx.response.body =userName
   },
 
   homeParams: async(ctx, next) => {
